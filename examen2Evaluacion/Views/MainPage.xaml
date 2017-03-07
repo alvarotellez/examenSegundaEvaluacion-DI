@@ -1,0 +1,107 @@
+﻿<Page
+    x:Class="examen2Evaluacion.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:examen2Evaluacion"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:examen2Evaluacion.ViewModels"
+    xmlns:data="using:examen2Evaluacion.Model"
+    mc:Ignorable="d">
+
+    <Page.DataContext>
+        <vm:clsMainPageVM/>
+    </Page.DataContext>
+
+    <!--Definimos dos filas, una para el personaje y otra para el detalle del personaje seleccionado-->
+    <Grid Background="#0078d7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <!--GridView con la imagen de perfil de cada personaje-->
+        <GridView Grid.Row="0" SelectedItem="{Binding Path=personajeSeleccionado, Mode=TwoWay}" ItemsSource="{Binding listaPersonajes, UpdateSourceTrigger=PropertyChanged}">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Image MaxHeight="200" MaxWidth="200" Source="{Binding imagenPrincipal}"/>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+        <!--Definimos dos columnas en la columna de la izquierda van los datos del personaje y en la de la derecha va la galeria de imagenes-->
+        <Grid Grid.Row="1" DataContext="{Binding personajeSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="700"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--Grid con la imagen de perfil del personaje y el nombre y el alias-->
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <!--Imagen principal del personaje nombre y alias-->
+                <Image Source="{Binding imagenPrincipal}" Margin="5" Grid.Column="0" Grid.RowSpan="2" />
+                <TextBlock Text="{Binding nombre}" FontSize="25" Grid.Row="0" Grid.Column="1"></TextBlock>
+                <TextBlock Text="{Binding alias}" FontSize="25" Grid.Row="1" Grid.Column="1"></TextBlock>
+            </Grid>
+            <!--Aqui va la informacion concreta de cada peronaje-->
+            <!--En una columna va el label y en la otra va el progress bar-->
+            <ScrollViewer Grid.Column="0" Grid.Row="1">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!--Datos de la vida-->
+                    <TextBlock Name="lblVida" Grid.Column="0" Grid.Row="0" Text="Vida:" Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbVida" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Margin="5" Value="{Binding vida}"/>
+                    <!--Datos de la regeneracion-->
+                    <TextBlock Name="lblRegeneracion" Grid.Column="0" Grid.Row="1" Text="Regeneración:" Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbRegeneracion" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="5" Value="{Binding regeneracion}"/>
+                    <!--Datos del danno-->
+                    <TextBlock Name="lblDanno" Grid.Column="0" Grid.Row="2" Text="Daño:" Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbDano" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Margin="5" Value="{Binding danno}"/>
+                    <!--Datos de armadura-->
+                    <TextBlock Name="lblArmadura" Grid.Column="0" Grid.Row="3" Text="Armadura:" Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbAramadura" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="5" Value="{Binding armadura}"/>
+                    <!--Datos de la velocidad de ataque-->
+                    <TextBlock Name="lblVelAtaque" Grid.Column="0" Grid.Row="4" Text="Velocidad de ataque: " Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbVelAtaque" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Margin="5" Value="{Binding velAtaque}"/>
+                    <!--Datos de la velocidad de movivimiento-->
+                    <TextBlock Name="lblVelMovimiento" Grid.Column="0" Grid.Row="5" Text="Velocidad de Movimiento: " Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbVelMovimiento" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" Margin="5" Value="{Binding velMovimiento}"/>
+                    <!--Datos de la resistencia-->
+                    <TextBlock Name="lblResistencia" Grid.Column="0" Grid.Row="6" Text="Resistencia: " Foreground="White" Margin="10" FontSize="18"/>
+                    <ProgressBar Name="pbResistencia" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Margin="5" Value="{Binding resistencia}"/>
+                </Grid>
+            </ScrollViewer>
+
+            <!--Flipview de las imagenes-->
+            <FlipView Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding fotos}">
+                <FlipViewItem>
+                    <DataTemplate>
+                        <Image Source="{Binding}"/>
+                    </DataTemplate>
+                </FlipViewItem>
+            </FlipView>
+        </Grid>
+    </Grid>
+</Page>
